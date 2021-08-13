@@ -1,0 +1,16 @@
+info(storage): opening "cluster_0000000001_replica_000.tigerbeetle"...
+debug(vr): 0: journal: size=256MiB headers_len=16384 headers=2MiB circular_buffer=252MiB
+debug(vr): 0: init: client_table.capacity()=64 for config.clients_max=32 entries
+debug(vr): 0: init: leader
+debug(vr): 0: ping_timeout started
+debug(vr): 0: commit_timeout started
+debug(vr): 0: repair_timeout started
+info: cluster=1 replica=0: listening on 127.0.0.1:3001
+debug(vr): 0: repair_timeout fired
+debug(vr): 0: repair_timeout reset
+debug(vr): 0: ping_timeout fired
+debug(vr): 0: ping_timeout reset
+debug(vr): 0: commit_timeout fired
+debug(vr): 0: commit_timeout reset
+debug(vr): 0: repair_timeout fired
+debug(vr): 0: repair_timeout reset

@@ -44,7 +44,7 @@ TigerBeetle's Zig implementation of io_uring was [submitted](https://github.com/
 
 ## BetaBeetle (under active development)
 
-The [beta version](https://github.com/coilhq/tigerbeetle/tree/beta) of **TigerBeetle is now under active development** and [our design document](./docs/DESIGN.md) details our design decisions regarding performance and safety, and where we want to go regarding accounting features.
+The [beta version](https://github.com/coilhq/tigerbeetle/tree/beta2) of **TigerBeetle is now under active development** and [our design document](./docs/DESIGN.md) details our design decisions regarding performance and safety, and where we want to go regarding accounting features.
 
 ## QuickStart
 
@@ -72,12 +72,19 @@ scripts/benchmark.sh
 
 ## Launch a Local Cluster
 
-Launch a TigerBeetle cluster on your local machine by running each of these commands in a new terminal tab:
+You can initialize and run a local cluster like so:
 
-```
-./tigerbeetle --cluster=1 --addresses=3001,3002,3003 --replica=0
-./tigerbeetle --cluster=1 --addresses=3001,3002,3003 --replica=1
-./tigerbeetle --cluster=1 --addresses=3001,3002,3003 --replica=2
+<!-- TODO: is this valid? -->
+```bash
+mkdir -p /tmp/tigerbeetle
+./tigerbeetle init --cluster=0 --replica=0 --directory=/tmp/tigerbeetle
+./tigerbeetle init --cluster=0 --replica=1 --directory=/tmp/tigerbeetle
+./tigerbeetle init --cluster=0 --replica=2 --directory=/tmp/tigerbeetle
+
+# run each of these commands in a new terminal tab:
+./tigerbeetle start --cluster=0 --addresses=3001,3002,3003 --replica=0 --directory=/tmp/tigerbeetle 
+./tigerbeetle start --cluster=0 --addresses=3001,3002,3003 --replica=1 --directory=/tmp/tigerbeetle
+./tigerbeetle start --cluster=0 --addresses=3001,3002,3003 --replica=2 --directory=/tmp/tigerbeetle
 ```
 
 Run the TigerBeetle binary to see all command line arguments:
