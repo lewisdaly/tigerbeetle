@@ -176,6 +176,80 @@ rm -rf /tmp/tigerbeetle
 
 
 
+### Part 3 Further benchmarks
+
+```bash
+$ zig/zig run demos/io_uring/fs_io_uring.zig
+
+fs io_uring: write(4096)/fsync/read(4096) * 65536 pages = 386 syscalls: 50337ms
+fs io_uring: write(4096)/fsync/read(4096) * 65536 pages = 386 syscalls: 47867ms
+fs io_uring: write(4096)/fsync/read(4096) * 65536 pages = 386 syscalls: 48228ms
+fs io_uring: write(4096)/fsync/read(4096) * 65536 pages = 386 syscalls: 47014ms
+fs io_uring: write(4096)/fsync/read(4096) * 65536 pages = 386 syscalls: 46912ms
+
+
+$ zig/zig run demos/io_uring/fs_blocking.zig
+fs blocking: write(4096)/fsync/read(4096) * 65536 pages = 196608 syscalls: 332683ms
+fs blocking: write(4096)/fsync/read(4096) * 65536 pages = 196608 syscalls: 233802ms
+fs blocking: write(4096)/fsync/read(4096) * 65536 pages = 196608 syscalls: 209034ms
+fs blocking: write(4096)/fsync/read(4096) * 65536 pages = 196608 syscalls: 206245ms
+fs blocking: write(4096)/fsync/read(4096) * 65536 pages = 196608 syscalls: 207356ms
+
+# node hash table benchmark
+$ node benchmark.js
+1000000 hash table insertions in 4695ms
+1000000 hash table insertions in 1388ms
+1000000 hash table insertions in 1249ms
+1000000 hash table insertions in 1235ms
+1000000 hash table insertions in 1274ms
+
+$ zig/zig run demos/hash_table/benchmark.zig
+1000000 hash table insertions in 1501ms
+1000000 hash table insertions in 1521ms
+1000000 hash table insertions in 1537ms
+1000000 hash table insertions in 1577ms
+1000000 hash table insertions in 1638ms
+
+
+# network benchmarks
+$ zig/zig run demos/io_uring/net_io_uring.zig
+
+# in another session - install rust_echo_bench
+$ cd ~/
+$ git clone https://github.com/haraldh/rust_echo_bench.git
+$ cd rust_echo_bench
+
+# 1 connection
+$ cargo run --release -- --address "localhost:3001" --number 1 --duration 20 --length 64
+
+Benchmarking: localhost:3001
+1 clients, running 64 bytes, 20 sec.
+
+Speed: 9905 request/sec, 9905 response/sec
+Requests: 198112
+Responses: 198111
+
+# 2 connections
+$ cargo run --release -- --address "localhost:3001" --number 2 --duration 20 --length 64
+
+Benchmarking: localhost:3001
+2 clients, running 64 bytes, 20 sec.
+
+Speed: 19695 request/sec, 19695 response/sec
+Requests: 393900
+Responses: 393900
+
+# 50 connections
+$ cargo run --release -- --address "localhost:3001" --number 50 --duration 20 --length 64
+
+Benchmarking: localhost:3001
+50 clients, running 64 bytes, 20 sec.
+
+Speed: 26735 request/sec, 26735 response/sec
+Requests: 534715
+Responses: 534714
+```
+
 
 ## TODOs:
 - easier config for demos
